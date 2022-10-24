@@ -1,0 +1,26 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: whoami-ingress-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoami-ingress
+  template:
+    metadata:
+      labels:
+        app: whoami-ingress
+    spec:
+      containers:
+      - image: ctmagazin/whoami 
+        name: whoami-container
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 90Mi
+          limits:
+            cpu: 200m
+            memory: 190Mi

@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>k8s intro</title>
+  
+  <meta name="description" content="Presentación - introducción a kubernetes en español. Conceptos, comandos, ejercicios" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/night.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css" >
+  <style>
+    div.slides > section {
+      padding-top: 100px;
+    }
+    pre {
+      position: relative;
+    }
+
+    .--copy {
+      position: absolute;
+      top: 10px;
+      right: 0px;
+    }
+
+    .text-sm {
+      font-size: 1.6rem;
+    }
+
+    ul.cols-2 {
+      display: grid ;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <div class="slides" >
+
+      <section id="indice">
+
+        <section>
+          <img style="max-height: 300px;" src="https://kubernetes.io/images/nav_logo2.svg" alt="">
+          <h3>de Cero al Mero mero</h3>
+        </section>
+        <section>
+          <h3>Índice</h3>
+          <ul>
+            <div><a href="#intro">Clase 1.1: Intro</a></div>
+            <div><a href="#tools">Clase 1.2: Instalación de herramientas</a></div>
+            <div><a href="#cli">Clase 2: Kubectl CLI</a></div>
+          </ul>
+        </section>
+      </section>
+      <section id="intro">
+        <section>
+          <h1>Intro</h1>
+          <ul>
+            <li><a href="/#/origin">De donde surge</a></li>
+            <li><a href="/#/characteristics">Características</a></li>
+            <li><a href="/#/components">Componentes de k8s</a></li>
+            <li><a href="/#/api">API de Kubernetes</a></li>
+            <li><a href="/#/objects">Objetos de k8s</a></li>
+            <li><a href="/#/kubectl">Gestión de objetos usando kuubectl</a></li>
+          </ul>
+        </section>
+        <section id="origin">
+          <h3>¿De donde surge?</h3>
+          <p style="font-size: 2rem;">
+            Google liberó el proyecto Kubernetes en el año 2014. Kubernetes se basa en la experiencia de Google corriendo aplicaciones en producción a gran escala por década y media, junto a las mejores ideas y prácticas de la comunidad.
+          </p>
+          <p style="font-size: 2rem;">
+            Kubernetes es una plataforma portable y extensible de código abierto para administrar cargas de trabajo y servicios. Kubernetes facilita la automatización y la configuración declarativa.
+          </p>
+        </section>
+        <section id="characteristics">
+          <h3>Características</h3>
+          <p></p>
+          <ul>
+            <li>Entorno de administración centrado en contenedores</li>
+            <li> orquesta la infraestructura de cómputo, redes y almacenamiento</li>
+            <li>Plataforma de microservicios</li>
+            <li>Portable para la nube</li>
+            <li>Hace más fácil el desplegar, escalar y administrar aplicaciones.</li>
+          </ul>
+        </section>
+        <section id="components">
+          <h3>Componentes de k8s</h3>
+          <p>Cuando hablamos de Kubernetes, hablamos de un <b>clúster</b> de computadoras</p>
+          <p>Un <b>clúster</b> de Kubernetes consta de un conjunto de máquinas de trabajo, llamadas <b>nodos</b>, que ejecutan aplicaciones en contenedores. Cada clúster tiene al menos un <b>nodo worker</b>.</p>
+          <p>Los <b> nodos workers</b> alojan los <b>pods</b> que son los componentes que ejecutan los contenedores de las aplicaciones.</p>
+        </section>
+        <section>
+          <p>los nodos y pods son controlador por el <b> plano de control (control plane)</b></p>
+          <img src="./componentes-k8s.png">
+        </section>
+        <section>
+          <h4>Control Plane</h4>
+          <p style="font-size: 1.5rem;">
+            Los componentes que forman el plano de control toman decisiones globales sobre el clúster (por ejemplo, la planificación) y detectan y responden a eventos del clúster. Normalmente corre en uno o varios nodos donde no corren pods del usuario.
+          </p>
+          <ul>
+            <li style="font-size: 1.5rem;"><b>kube-apiserver</b>: que expone la API de Kubernetes. recibe las peticiones y actualiza acordemente el estado en etcd.</li>
+            <li style="font-size: 1.5rem;"><b>etcd</b>: Almacén de datos persistente, consistente y distribuido. Es utilizado para almacenar toda a la información del clúster. </li>
+            <li style="font-size: 1.5rem;"><b>kube-scheduler</b>: Asigna nuevos pods a nodos según requisitos de recursos, restricciones de hardware/software/políticas, afinidad y anti-afinidad, localización de datos dependientes, etc.</li>
+            <li style="font-size: 1.5rem;"><b>kube-controller-manager</b>: Controla nodos, replicas de pods, conecta servicios con pods y maneja accesos</li>
+            <li style="font-size: 1.5rem;"><b>cloud-controller-manager</b>: controladores que interactúan con proveedores de la nube</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Componenetes de los nodos</h4>
+          <p> Además,corren en cada nodo corren otros componentes, manteniendo a los pods en funcionamiento y proporcionando el entorno de ejecución de Kubernetes</p>
+          <ul>
+            <li><b>kubelet</b>: Se asegura de que los contenedores estén corriendo en un pod.</li>
+            <li><b>kube-proxy</b>: Asegura las reglas de red en el host haciendo reenvío de conexiones.</li>
+            <li><b>runtime</b>: Es el software que se encarga de correr los contenedores: Docker, containerd, cri-o</li>
+          </ul>
+        </section>
+        <section id="api">
+          <h3>API de Kubernetes</h3>
+          <p>
+            La API de Kubernetes sirve como base para el esquema de configuración declarativa del sistema. La herramienta de línea de comandos kubectl puede ser usada para crear, actualizar, eliminar y consultar objetos a través de la API.
+          </p>
+          <p>
+            Para trabajar con los objetos de Kubernetes -- sea para crearlos, modificarlos, o borrarlos -- necesitarás usar la API de Kubernetes. 
+          </p>
+          <p>
+            Para facilitar la eliminación de propiedades o reestructurar la representación de un recurso, Kubernetes soporta múltiples versiones de la API en distintas rutas como /api/v1 o /api/betav1
+          </p>
+        </section>
+        <section id="objects">
+          <h3>Objetos de Kubernetes</h3>
+          <p>
+            Los Objetos de Kubernetes son entidades persistentes dentro del sistema de Kubernetes. Kubernetes utiliza estas entidades para representar el estado de tu clúster. Específicamente, pueden describir:
+          </p>
+          <ul>
+            <li>Qué aplicaciones corren en contenedores (y en qué nodos)</li>
+            <li>Los recursos disponibles para dichas aplicaciones</li>
+            <li>Las políticas acerca de cómo dichas aplicaciones se comportan, como las políticas de reinicio, actualización, y tolerancia a fallos</li>
+          </ul>
+        </section>
+        <section>
+          <p>Cada objeto de K8s tendrá dos propiedades: spec y status.</p>
+          <ul>
+            <li><b>spec</b>: Es definida por el usuario y contiene las características que se quiere que tenga el objeto</li>
+            <li><b>status</b>: Es manejador por el sistema de Kubernetes y describe el estado actual del objecto</li>
+          </ul>
+          <p>el sistema de Kubernetes analiza constantemente la spec y el estado, en caso de haber diferencias lleva a cabo una correción</p>
+        </section>
+        <section>
+          <h4>Archivos manifiesto YAML</h4>
+          <p>En general los objetos son representados en archivos .yaml, los cuales tienen que tener estos campos obligatorios</p>
+          <ul>
+            <li><b>apiVersion</b>: Qué versión de la API de Kubernetes estás usando para crear este objeto</li>
+            <li><b>kind</b>: Qué clase de objeto quieres crear</li>
+            <li><b>metadata</b>: Datos que permiten identificar unívocamente al objeto, incluyendo una cadena de texto para el name, UID, y opcionalmente el namespace</li>
+            <li><b>spec</b>: es diferente según el tipo de objeto de Kubernetes, y contiene campos anidados específicos de cada objeto</li>
+          </ul>
+          <p>Para saber qué campos son posibles o requeridos para cada objeto revisa la  <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/">Referencia de la API de Kubernetes</a></p>
+        </section>
+        <section id="kubectl">
+          <h3>Gestión de objetos usando kubectl</h3>
+          <p>La herramienta de línea de comandos kubectl admite varias formas diferentes de crear y administrar objetos de Kubernetes</p>
+          <ul>
+            <li><b>Comandos imperativos</b>: en objectos existenetes y corriendo</li>
+            <li><b>Configuración imperativa</b>: Un solo archivo .yaml</li>
+            <li><b>Configuración declarativa</b>: un directorio con varios archivos .yaml</li>
+          </ul>
+        </section>
+      </section>
+      <section id="tools">
+        <section>
+          <h2>Instalación de herramientas para Kubernetes</h2>
+          <h3>kubectl & kind</h3>
+        </section>
+        <section>
+          <h2>kubectl</h2>
+          <ul>
+            <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">Linux</a></li>
+            <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/">Mac</a></li>
+            <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/">Windows</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Kind</h2>
+          <p>Sigue los pasos según tu sistema operativo: <a href="https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries">instala kind</a></p>
+        </section>
+        <section>
+          <p>Asegurate de tener instalado ambos programas:</p>
+          <pre><code data-trim data-noescape>
+            kubectl version
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            kind --version
+          </code></pre>
+        </section>
+        <section>
+          <h1>Crea un cluster local</h1>
+          <pre><code data-trim data-noescape>
+            kind create cluster
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            kubectl cluster-info --context kind-kind
+          </code></pre>
+        </section>
+      </section>
+
+      <section id="cli">
+        <section>
+          <h1>kubectl CLI</h1>
+        </section>
+        <section data-markdown style="font-size: 1.5rem;">
+          <textarea data-template >
+            ### Comandos imperativos
+          
+            Usado principalmente para ambientos de desarrollo. Opera directamente en objetos <i>live</i>
+
+            Es posible crear, borrar, editar o analizar objetos.
+                
+            | Ventajas | Desventajas |
+            | --- | --- |
+            | Acciones de una sola palabra | No se integra con la revisión de cambios |
+            | Cambios en un solo paso | No permite auditoria por cambios |
+            |  | No deja plantillas para crear nuevos objetos |
+          </textarea>
+        </section>
+        <section>
+          <p>Ejemplo: Crear un deployment de una imagen de nginx</p>
+          <pre><code data-trim data-noescape>
+            kubectl create deployment nginx --image nginx
+          </code></pre>
+          <p>Verifica la creación de tu pod</p>
+          <pre><code data-trim data-noescape>
+            kubectl get pods
+          </code></pre>
+          <p>
+            Más información: <a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/">Comandos imperativos</a> 
+          </p>
+        </section>
+        <section>
+          <h3>Configuración imperativa de objeto </h3>
+          <p style="font-size: 1.5rem;">En la configuración de objetos imperativo, el comando kubectl especifica la operación (crear, reemplazar, etc.), indicadores opcionales y al menos un nombre de archivo. El archivo especificado debe contener una definición completa del objeto en formato YAML o JSON después de la opcion -f (ruta local o url web)</p>
+        </section>
+        <section data-markdown style="font-size: 1.5rem;">
+          <textarea data-template >
+            | Ventajas | Desventajas |
+            | --- | --- |
+            | La configuración y sus cambios se pueden guardar en Git | Requiere conocer el esquema del objecto |
+            | Se pueden realizar revisión de cambios | Hay que crear un archivo primero |
+            | proporciona una plantilla para crear nuevos objetos | Si se hacen cambios imperativos al objecto live no quedan reflejados en el archivo |
+          </textarea>
+        </section>
+        <section>
+          <p>crea el siguiente archivo: whoami-deploy.yml <p>
+          <pre><code data-trim data-noescape>
+            apiVersion: apps/v1 
+            kind: Deployment
+            metadata:
+              name: whoami-ingress-deployment
+            spec:
+              replicas: 2
+              selector:
+                matchLabels:
+                  app: whoami-ingress
+              template:
+                metadata:
+                  labels:
+                    app: whoami-ingress
+                spec:
+                  containers:
+                  - image: ctmagazin/whoami 
+                    name: whoami-container
+                    ports:
+                    - containerPort: 80
+                    resources:
+                      requests:
+                        cpu: 100m
+                        memory: 90Mi
+                      limits:
+                        cpu: 200m
+                        memory: 190Mi
+
+          </code></pre>  
+        </section>
+        <section>
+          <pre><code data-trim data-noescape>
+            kubectl create -f whoami-deploy.yml
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            kubectl get pods
+          </code></pre>
+          <p>Cambia el valor del campo replicas de 2 a 4 y corre este comando</p>
+          <pre><code data-trim data-noescape>
+            kubectl apply -f whoami-deploy.yml
+          </code></pre>
+          
+        </section>
+        <section>
+          <h3>Configuración declarativa de objectos </h3>
+        </section>
+      </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    // Full list of configuration options:
+    // https://revealjs.revealjs.com/config/
+    Reveal.initialize({
+      center: true,
+
+      transition: 'linear',
+      plugins: [RevealMarkdown, RevealHighlight]
+      // transitionSpeed: 'slow',
+      // backgroundTransition: 'slide'
+    });
+
+    function enableCopy(selector = "pre", childSelector = "code", btnText = "Copiar", btnTextSuccess = "Copiado!", activeClass = "--copy") {
+      document.querySelectorAll(`${selector}:not(.${activeClass})`).forEach(node => { // create a "copy" button
+      let copyBtn = document.createElement("button");
+      copyBtn.innerText = btnText;
+      // activeClass acts as flag so we don't add another copy button by  mistake
+        copyBtn.classList.add(activeClass); 
+        node.appendChild(copyBtn);  copyBtn.addEventListener("click", async () => {    // copy to clipboard
+          if (navigator.clipboard) {
+            let text = node.querySelector(childSelector).innerText;
+            console.log('text', text)
+            await navigator.clipboard.writeText(text);
+          }    // change text of button after copying
+          copyBtn.innerText = btnTextSuccess;    // change text back to normal after ### ms
+          setTimeout(() => copyBtn.innerText = btnText, 2000);
+        })   
+      })
+    }
+
+    enableCopy()
+  </script>
+
+</body>
+
+</html>
