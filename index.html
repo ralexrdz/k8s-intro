@@ -89,7 +89,7 @@
             <li> orquesta la infraestructura de cómputo, redes y almacenamiento</li>
             <li>Plataforma de microservicios</li>
             <li>Portable para la nube</li>
-            <li>Hace más fácil el desplegar, escalar y administrar aplicaciones.</li>
+            <li>Hace más fácil el desplegar, escalar y administrar aplicaciones</li>
           </ul>
         </section>
         <section id="components">
@@ -108,9 +108,9 @@
             Los componentes que forman el plano de control toman decisiones globales sobre el clúster (por ejemplo, la planificación) y detectan y responden a eventos del clúster. Normalmente corre en uno o varios nodos donde no corren pods del usuario.
           </p>
           <ul>
-            <li style="font-size: 1.5rem;"><b>kube-apiserver</b>: que expone la API de Kubernetes. recibe las peticiones y actualiza acordemente el estado en etcd.</li>
+            <li style="font-size: 1.5rem;"><b>kube-apiserver</b>: que expone la API de Kubernetes. recibe las peticiones y actualiza acordemente el estado en etcd</li>
             <li style="font-size: 1.5rem;"><b>etcd</b>: Almacén de datos persistente, consistente y distribuido. Es utilizado para almacenar toda a la información del clúster. </li>
-            <li style="font-size: 1.5rem;"><b>kube-scheduler</b>: Asigna nuevos pods a nodos según requisitos de recursos, restricciones de hardware/software/políticas, afinidad y anti-afinidad, localización de datos dependientes, etc.</li>
+            <li style="font-size: 1.5rem;"><b>kube-scheduler</b>: Asigna nuevos pods a nodos según requisitos de recursos, restricciones de hardware/software/políticas, afinidad y anti-afinidad, localización de datos dependientes, etc</li>
             <li style="font-size: 1.5rem;"><b>kube-controller-manager</b>: Controla nodos, replicas de pods, conecta servicios con pods y maneja accesos</li>
             <li style="font-size: 1.5rem;"><b>cloud-controller-manager</b>: controladores que interactúan con proveedores de la nube</li>
           </ul>
@@ -119,8 +119,8 @@
           <h4>Componenetes de los nodos</h4>
           <p> Además,corren en cada nodo corren otros componentes, manteniendo a los pods en funcionamiento y proporcionando el entorno de ejecución de Kubernetes</p>
           <ul>
-            <li><b>kubelet</b>: Se asegura de que los contenedores estén corriendo en un pod.</li>
-            <li><b>kube-proxy</b>: Asegura las reglas de red en el host haciendo reenvío de conexiones.</li>
+            <li><b>kubelet</b>: Se asegura de que los contenedores estén corriendo en un pod</li>
+            <li><b>kube-proxy</b>: Asegura las reglas de red en el host haciendo reenvío de conexiones</li>
             <li><b>runtime</b>: Es el software que se encarga de correr los contenedores: Docker, containerd, cri-o</li>
           </ul>
         </section>
@@ -295,6 +295,9 @@
             kubectl create -f whoami-deploy.yml
           </code></pre>
           <pre><code data-trim data-noescape>
+            kubectl create -f whoami-deploy.yml
+          </code></pre>
+          <pre><code data-trim data-noescape>
             kubectl get pods
           </code></pre>
           <p>Cambia el valor del campo replicas de 2 a 4 y corre este comando</p>
@@ -305,6 +308,329 @@
         </section>
         <section>
           <h3>Configuración declarativa de objectos </h3>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h3>Principales Objetos de k8s</h3>
+          <img src="https://miro.medium.com/max/720/1*viLY3qG94sI3p4dqCGeEwA.png" alt="" srcset="">
+        </section>
+        <section>
+          <h4>Tipos</h4>
+          <ul>
+            <li><a href="/#/infrasctructure">Infraesctructura</a></li>
+            <li><a href="/#/workload">Trabajo</a></li>
+            <li><a href="/#/network">Red</a></li>
+            <li><a href="/#/storage">Almacenamiento</a></li>
+            <li><a href="/#/configuration">Configuración</a></li>
+            <li><a href="/#/scaling">Escalamiento</a></li>
+            <li><a href="/#/security">Seguridad</a></li>
+          </ul>
+        </section>
+        <section id="infrasctructure">
+          <h4>Infraesctructura</h4>
+          <ul>
+            <li><a href="/#/cluster">Cluster</a></li>
+            <li><a href="/#/control-plane">Control Plane</a></li>
+            <li><a href="/#/node">Node</a></li>
+          </ul>
+        </section>
+        <section id="cluster">
+          <h4>Cluster</h4>
+          <ul>
+            <li>El clúster de Kubernetes consta de al menos un plano principal (de control) y una o más máquinas de trabajo, denominadas nodos, que ejecutan aplicaciones en contenedores</li>
+          </ul>
+        </section>
+        <section id="control-plane">
+          <h4>Control Plane</h4>
+          <ul>
+            <li>También conocido como nodo maestro o nodo principal</li>
+            <li>El plano de control administra los nodos trabajadores y los pods en el clúster</li>
+            <li>El plano de control recibe información de una CLI o UI a través de una API. es decir, punto de entrada para REST/kubectl</li>
+            <li>Los componentes del plano de control toman decisiones globales sobre el clúster, además de detectar y responder a los eventos del clúster</li>
+          </ul>
+        </section>
+        <section id="node">
+          <h4>Node</h4>
+          <ul>
+            <li>También conocido como nodo trabajador o nodo de cómputo</li>
+            <li>Cada nodo contiene los servicios necesarios para ejecutar Pods (para ejecutar aplicaciones en contenedores), administrados por el plano de control</li>
+            <li>El clúster de Kubernetes necesita al menos un nodo trabajador, pero normalmente tiene muchos</li>
+            <li>Los pods están programados y orquestados para ejecutarse en nodos</li>
+            <li>Puede ampliar y reducir el clúster agregando y eliminando nodos</li>
+          </ul>
+        </section>
+        <section id="workload">
+          <h4>Trabajo</h4>
+          <ul>
+            <li><a href="/#/namespace">Namespace</a></li>
+            <li><a href="/#/pod">Pod</a></li>
+            <li><a href="/#/deploy">Deployment / App</a></li>
+            <li><a href="/#/replicaset">Replicaset</a></li>
+            <li><a href="/#/statefulset">Statefulset</a></li>
+            <li><a href="/#/daemonset">Daemonset</a></li>
+            <li><a href="/#/job">Job</a></li>
+            <li><a href="/#/cronjob">Cronjob</a></li>
+          </ul>
+        </section>
+        <section id="namespace">
+          <h4>Namespace</h4>
+          <ul>
+            <li>Los namespaces proporcionan un mecanismo para aislar grupos de recursos dentro de un único clúster</li>
+            <li>Los nombres de los recursos deben ser únicos dentro de un namespace, pero no entre namespaces</li>
+            <li>El <i>scope</i> de un namespace solo se aplica a los objetos que se basan en ellos (p. ej. Deployments, Services, etc) y no a los objetos de clúster (p. ej.StorageClass, Nodes, PersistentVolumes, etc)</li>
+            <li>Los namespaces permiten organizar los recursos en grupos que no se superponen (por ejemplo, por entorno, por proyecto, por equipo)</li>
+          </ul>
+        </section>
+        <section id="pod">
+          <h4>Pod</h4>
+          <ul>
+            <li>Pod es la unidad de trabajo básica y la unidad informática implementable más pequeña que puede se puede crear y administrar en Kubernetes.</li>
+            <li>Pod es un grupo de uno o más contenedores, con almacenamiento compartido y recursos de red, y una especificación sobre cómo ejecutar los contenedores.</li>
+          </ul>
+        </section>
+        <section id="deploy">
+          <h4>Deployment / App <a style="font-size: 1rem;" href="https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/">API</a></h4>
+          <ul>
+            <li>Un Deployment proporciona actualizaciones declarativas para Pods (Pods idénticos) y ReplicaSets.</li>
+            <li>Un Deployment crea un objeto de administración un nivel más alto que un conjunto de réplicas y le permite implementar y administrar actualizaciones para pods en un clúster.</li>
+            <li>Un Deployment maneja el ReplicaSet, que se crea automáticamente con un Deployment.</li>
+            <li>Un Deployment es la forma más común de desplegar una aplicación en Kubernetes.</li>
+            <li>Se describe un estado deseado en una implementación y el controlador de implementación cambia el estado real al estado deseado a una velocidad controlada.</li>
+            <li>Un Deployment tiene detalles sobre cómo implementar (o retroceder) en las versiones de su aplicación.</li>
+          </ul>
+        </section>
+        <section id="replicaset">
+          <h4>Replicaset</h4>
+          <ul>
+            <li>El propósito de un ReplicaSet es mantener un conjunto estable de pods de réplica (pods idénticos) ejecutándose en un momento dado.</li>
+            <li>ReplicaSet garantiza que siempre se esté ejecutando una cantidad definida de pods.</li>
+            <li>Kubernetes permite la autorreparación a través de ReplicaSets y Replication Controllers. El controlador de replicación ayuda a garantizar que un Pod se vuelva a crear automáticamente cuando la aplicación dentro del Pod falla.</li>
+            <li>Por lo general, ReplicaSet no debe crearse directamente. Sin embargo, la implementación es un concepto de nivel superior que administra los conjuntos de réplicas y proporciona actualizaciones declarativas para los pods.</li>
+            <li>Se recomienda usar Deployments en lugar de usar directamente ReplicaSets.</li>
+          </ul>
+        </section>
+        <section id="statefulset">
+          <h4>Statefulset</h4>
+          <ul>
+            <li>StatefulSet se utiliza para administrar aplicaciones con estado con almacenamiento persistente.</li>
+            <li>El almacenamiento permanece asociado con sus pods. Los volúmenes persisten cuando se eliminan los pods. Los pods se implementan/actualizan individualmente y en orden.</li>
+            <li>StatefulSet ejecuta pods con estado con una identidad estable y brinda garantías sobre el orden y la singularidad de estos Pods. Los nombres de los pods se conservan cuando se reprograman (aplicacion-0, aplicacion-1).</li>
+            <li>Al igual que un Deployment, un StatefulSet administra pods que se basan en una especificación de contenedor idéntica. La diferencia es que los StatefulSet mantienen una identidad fija para cada uno de sus pods.</li>
+            <li>Los pods tienen nombres de DNS fijos, a diferencia de los Pods de Deployments.</li>
+            <li>Los pods se crean a partir de la misma especificación, pero no son intercambiables.</li>
+            <li>Cada Pod tiene su propio almacenamiento.</li>
+          </ul>
+        </section>
+        <section id="daemonset">
+          <h4>Daemonset</h4>
+          <ul>
+            <li>DaemonSet garantiza que todos los nodos (o algunos, que coincidan con un selector de nodos) ejecuten una copia de un pod. A medida que se agregan nodos al clúster, se les agregan pods. A medida que se eliminan los nodos del clúster, esos pods se recolectan como elementos no utilizados. Eliminar un DaemonSet limpiará los Pods que creó.</li>
+            <li>DaemonSet implementa una única instancia de un pod en todos los nodos de trabajo (o en un subconjunto filtrado de ellos).        </li>
+            <li>Se usa para ejecutar un demonio de almacenamiento de clúster en cada nodo.</li>
+            <li>Se usa para ejecutar un demonio de recopilación de registros en cada nodo.</li>
+            <li>Se usa para ejecutar un demonio de monitoreo de nodos en cada nodo.</li>
+          </ul>
+        </section>
+        <section id="job">
+          <h4>Job</h4>
+          <ul>
+            <li>Un Job ejecuta pods que realizan una tarea completable.</li>
+            <li>Un Job crea uno o más Pods y continuará reintentando la ejecución de los Pods hasta que un número específico de ellos finalice con éxito.</li>
+            <li>Eliminar un trabajo limpiará los pods que creó. La suspensión de un trabajo eliminará sus pods activos hasta que Un Job se reanude nuevamente.</li>
+          </ul>
+        </section>
+        <section id="cronjob">
+          <h4>Cronjob</h4>
+          <ul>
+            <li>CronJob crea trabajos en un horario repetitivo.</li>
+            <li>Un objeto CronJob es como una línea de un archivo crontab (tabla cron). Ejecuta un trabajo periódicamente en un horario determinado, escrito en formato Cron.</li>
+            <li>Los CronJobs están destinados a realizar acciones regulares programadas, como copias de seguridad, generación de informes, etc.</li>
+          </ul>
+        </section>
+        <section id="network">
+          <h4>Red</h4>
+          <ul>
+            <li><a href="/#/service">Service</a></li>
+            <li><a href="/#/ingress">Ingress</a></li>
+            <li><a href="/#/network-policy">Network Policy</a></li>
+            <li><a href="/#/endpoint">Endpoint</a></li>
+          </ul>
+        </section>
+        <section id="service">
+          <h4>Service <a style="font-size: 1rem;" href="https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/">API</a></h4>
+          <ul>
+            <li>El Service se utiliza para exponer una aplicación implementada con un conjunto de pods mediante un único punto de conexión. Es decir, asigna una dirección IP fija a un grupo lógico de pods.</li>
+            <li>El Service proporciona redes estables para pods (pods efímeros) al brindar direcciones IP y nombres de DNS estables, y proporciona una forma para que Kubernetes configure un proxy para reenviar tráfico.</li>
+            <li>El Service permite la comunicación entre nodos, pods y usuarios de la aplicación al clúster. El Service también proporciona balanceo de carga cuando tiene réplicas de Pod.</li>
+            <li>Hay cuatro tipos de servicios de Kubernetes: ClusterIP, NodePort, LoadBalancer y ExternalName.</li>
+          </ul>
+        </section>
+        <section id="ingress">
+          <h4>Ingress</h4>
+          <ul>
+            <li>Ingress administra el acceso externo a los servicios en un clúster, generalmente HTTP/S.</li>
+            <li>Ingress puede proporcionar balanceo de carga, terminación SSL y virtual hosting.</li>
+            <li>Ingress expone uno o más servicios a clientes externos a través de una única dirección IP accesible <b>externamente</b>.</li>
+            <li>El enrutamiento del tráfico está controlado por reglas definidas en el recurso Ingress.</li>
+            <li>El controlador de ingreso es responsable de cumplir con el ingreso, generalmente con un balanceador de carga.</li>
+          </ul>
+        </section>
+        <section id="network-policy">
+          <h4>Network Policy</h4>
+          <ul>
+            <li>La política de red aísla la red entre los pods especificando qué pods se pueden conectar entre sí y con otros puntos de la red.</li>
+            <li>La política de red funciona en OSI Layer 3 y Layer 4.</li>
+            <li>Las políticas de red son implementadas por el el <i>plugin network</i></li>
+          </ul>
+        </section>
+        <section id="endpoint">
+          <h4>Endpoint</h4>
+          <ul>
+            <li>Un Endpoint define qué pods (u otros servidores) están expuestos a través de un servicio.</li>
+            <li>Para los Services de Kubernetes, Kubernetes crea un objeto Endpoint. Este punto final tendrá el mapeo de direcciones IP de los pods. Esto se crea automáticamente para los Services con un selector definido.</li>
+            <li>Los Endpoints también se pueden usar para conectarse a servicios externos como si fueran internos del clúster de kubernetes.</li>
+          </ul>
+        </section>
+        <section id="storage">
+          <h4>Almacenamiento</h4>
+          <ul>
+            <li><a href="/#/persistance-volume">Persistance Volume</a></li>
+            <li><a href="/#/persistance-volume-claim">Persistance Volume Claim</a></li>
+            <li><a href="/#/storage-class">Storage Class</a></li>
+          </ul>
+        </section>
+        <section id="persistance-volume">
+          <h4>Persistance Volume</h4>
+          <ul>
+            <li>PV es una representación de bajo nivel de un volumen de almacenamiento. Es una abstracción del dispositivo de almacenamiento físico que se adjunta al clúster.</li>
+            <li>PV se puede montar a un Pod a través de un PVC.</li>
+            <li>PV es un recurso en el clúster que se puede aprovisionar dinámicamente mediante StorageClasses o que un administrador de clúster puede crear de forma explícita.</li>
+            <li>PV es independiente del ciclo de vida de los Pods. Significa que los datos representados por un PV continúan existiendo a medida que cambia el clúster y se eliminan y recrean los pods.</li>
+          </ul>
+        </section>
+        <section id="persistance-volume-claim">
+          <h4>Persistance Volume Claim</h4>
+          <ul>
+            <li>Un PVC une un Pod con un PV. Un Pod solicitar el Volumen a través de la PVC.</li>
+            <li>Un PVC es la solicitud para aprovisionar almacenamiento persistente con un tipo y una configuración específicos.</li>
+            <li>Los PVC describen la capacidad de almacenamiento y las características que requiere un pod, y el clúster intenta provisiona el volumen persistente deseado.</li>
+            <li>El PVC debe estar en el mismo namespace que el Pod. Para cada Pod, un PVC realiza una solicitud de consumo de almacenamiento dentro de un espacio de nombres.</li>
+            <li>El PVC es similar a un Pod. Los pods consumen recursos de nodos y PVC consumen recursos de PV.</li>
+          </ul>
+        </section>
+        <section id="storage-class">
+          <h4>Storage Class</h4>
+          <ul>
+            <li>StorageClass permite el provisionamiento dinámico de volúmenes persistentes, cuando PVC lo reclama.</li>
+            <li>StorageClass abstrae al proveedor de almacenamiento subyacente (de la nube).</li>
+            <li>StorageClass se usa junto con PVC para permitir que los pods soliciten dinámicamente un nuevo almacenamiento.</li>
+          </ul>
+        </section>
+        <section id="configuration">
+          <h4>Configuración</h4>
+          <ul>
+            <li><a href="/#/configmap">Configmap</a></li>
+            <li><a href="/#/secret">Secret</a></li>
+          </ul>
+        </section>
+        <section>
+          <section id="configmap">
+            <h4>Configmap</h4>
+            <ul>
+              <li>ConfigMap se utiliza para almacenar <b>datos no confidenciales</b> en pares clave-valor.</li>
+              <li>Los pods pueden consumir ConfigMaps como variables de entorno, argumentos de línea de comandos o como archivos de configuración en un volumen.</li>
+              <li>ConfigMap le permite desacoplar la configuración específica de las imágenes de su contenedor, para que sus aplicaciones sean fácilmente portátiles.</li>
+            </ul>
+          </section>
+          <section id="secret">
+            <h4>Secret</h4>
+            <ul>
+              <li>Los Secret son similares a ConfigMaps, pero están destinados específicamente a contener <b>datos confidenciales</b>.</li>
+              <li>Secret le permite almacenar y administrar una pequeña cantidad de información confidencial, como contraseñas, tokens, claves, claves SSH, etc.</li>
+              <li>Con los Secret, no es necesario incluir datos confidenciales en el código de la aplicación.</li>
+              <li>Los Secret se pueden crear independientemente de los Pods que los usan.</li>
+            </ul>
+          </section>
+        </section>
+        <section id="scaling">
+          <h4>Escalamiento</h4>
+          <ul>
+            <li><a href="/#/hpa">Horizontal Pod Autoscaling</a></li>
+            <li><a href="/#/pdb">Pod Disruption Budget</a></li>
+          </ul>
+        </section>
+        <section id="hpa">
+          <h4>Horizontal Pod Autoscaling</h4>
+          <ul>
+            <li>HPA actualiza automáticamente un recurso de carga de trabajo (como un Deployment o StatefulSet), con el objetivo de escalar o desescalar automáticamente la carga de trabajo para que coincida con la demanda.</li>
+            <li>HPA escala automáticamente la cantidad de réplicas de pods según el uso de la CPU, memoría, tráfico u otra métrica.</li>
+            <li>HPA controla el escalamiento de un Deployment y su ReplicaSet.</li>
+          </ul>
+        </section>
+        <section id="pdb">
+          <h4>Pod Disruption Budget</h4>
+          <ul>
+            <li>PDB limita la cantidad de Pods de una aplicación replicada que están inactivos simultáneamente debido a interrupciones voluntarias.</li>
+            <li>PDB puede detener temporalmente el proceso de desalojo si la cantidad de réplicas de una aplicación cae por debajo del umbral declarado. El proceso de desalojo continuará una vez que la cantidad de réplicas disponibles supere el umbral.</li>
+            <li>PDB define la cantidad mínima de pods que deben permanecer en ejecución al evacuar los nodos.</li>
+          </ul>
+        </section>
+        <section id="security">
+          <h4>Seguridad</h4>
+          <ul>
+            <li><a href="/#/service-account">Service Account</a></li>
+            <li><a href="/#/role">Role</a></li>
+            <li><a href="/#/cluster-role">Cluster Role</a></li>
+            <li><a href="/#/role-binding">Role Binding</a></li>
+            <li><a href="/#/cluster-role-binding">Cluster Role Binding</a></li>
+          </ul>
+        </section>
+        <section id="service-account">
+          <h4>Service Account</h4>
+          <ul>
+            <li>Kubernetes usa Service Accounts para autenticar y autorizar solicitudes de pods al servidor API de Kubernetes.</li>
+            <li>Un Service Account proporciona una identidad para los procesos que se ejecutan en un pod.</li>
+          </ul>
+        </section>
+        <section id="role">
+          <h4>Role</h4>
+          <ul>
+            <li>El Role define lo que se puede hacer con los recursos de Kubernetes.</li>
+            <li>El Role contiene una o más reglas que representan un conjunto de permisos.</li>
+            <li>Roles funcionan solo dentro de las restricciones de un namespace.</li>
+            <li>Después de crear un Role, lo asigna a un usuario o grupo de usuarios creando un RoleBinding.</li>
+          </ul>
+        </section>
+        <section id="cluster-role">
+          <h4>Cluster Role</h4>
+          <ul>
+            <li>ClusterRole funciona igual que Role, pero se aplican a todo el clúster.</li>
+            <li>Los ClusterRoles no están vinculados a un namespace específico. ClusterRole otorga acceso a más de un namespace o a todos.</li>
+            <li>Después de crear un ClusterRole, lo asigna a un usuario o grupo de usuarios creando un RoleBinding o ClusterRoleBinding.</li>
+            <li>Los ClusterRoles se usan normalmente con Service Accounts.</li>
+          </ul>
+        </section>
+        <section id="role-binding">
+          <h4>Role Binding</h4>
+          <ul>
+            <li>RoleBinding se utiliza para otorgar permiso a un Sujeto (usuario, grupo o Service Account).</li>
+            <li>RoleBinding contiene una lista de sujetos  y una referencia a la función que se otorga.</li>
+            <li>Role y RoleBinding se utilizan denro de un namespace.</li>
+            <li>Define quién puede realizar las acciones definidas en un Role o ClusterRole</li>
+          </ul>
+        </section>
+        <section id="cluster-role-binding">
+          <h4>Cluster Role Binding</h4>
+          <ul>
+            <li>ClusterRole y ClusterRoleBinding funcionan como Role y RoleBinding, excepto que tienen un alcance más amplio.</li>
+            <li>ClusterRoleBinding otorga acceso a todo el clúster y a múltiples namespaces</li>
+            <li>ClusterRoleBinding vincula o asocia un ClusterRole con un Sujeto (usuario, grupo o Service Account).</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Parámetros de los objetos</h3>
+
         </section>
       </section>
   </div>
