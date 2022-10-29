@@ -534,24 +534,22 @@
             <li><a href="/#/secret">Secret</a></li>
           </ul>
         </section>
-        <section>
-          <section id="configmap">
-            <h4>Configmap</h4>
-            <ul>
-              <li>ConfigMap se utiliza para almacenar <b>datos no confidenciales</b> en pares clave-valor.</li>
-              <li>Los pods pueden consumir ConfigMaps como variables de entorno, argumentos de línea de comandos o como archivos de configuración en un volumen.</li>
-              <li>ConfigMap le permite desacoplar la configuración específica de las imágenes de su contenedor, para que sus aplicaciones sean fácilmente portátiles.</li>
-            </ul>
-          </section>
-          <section id="secret">
-            <h4>Secret</h4>
-            <ul>
-              <li>Los Secret son similares a ConfigMaps, pero están destinados específicamente a contener <b>datos confidenciales</b>.</li>
-              <li>Secret le permite almacenar y administrar una pequeña cantidad de información confidencial, como contraseñas, tokens, claves, claves SSH, etc.</li>
-              <li>Con los Secret, no es necesario incluir datos confidenciales en el código de la aplicación.</li>
-              <li>Los Secret se pueden crear independientemente de los Pods que los usan.</li>
-            </ul>
-          </section>
+        <section id="configmap">
+          <h4>Configmap</h4>
+          <ul>
+            <li>ConfigMap se utiliza para almacenar <b>datos no confidenciales</b> en pares clave-valor.</li>
+            <li>Los pods pueden consumir ConfigMaps como variables de entorno, argumentos de línea de comandos o como archivos de configuración en un volumen.</li>
+            <li>ConfigMap le permite desacoplar la configuración específica de las imágenes de su contenedor, para que sus aplicaciones sean fácilmente portátiles.</li>
+          </ul>
+        </section>
+        <section id="secret">
+          <h4>Secret</h4>
+          <ul>
+            <li>Los Secret son similares a ConfigMaps, pero están destinados específicamente a contener <b>datos confidenciales</b>.</li>
+            <li>Secret le permite almacenar y administrar una pequeña cantidad de información confidencial, como contraseñas, tokens, claves, claves SSH, etc.</li>
+            <li>Con los Secret, no es necesario incluir datos confidenciales en el código de la aplicación.</li>
+            <li>Los Secret se pueden crear independientemente de los Pods que los usan.</li>
+          </ul>
         </section>
         <section id="scaling">
           <h4>Escalamiento</h4>
